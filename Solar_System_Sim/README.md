@@ -1,5 +1,28 @@
-# Solar_System_Sim
+# 🌌 Solar System Simulation
 
-This folder contains the Solar System Simulation project. It visualizes the motion of planets in the solar system.
+This simulation models all major planets orbiting a central star in a scaled-down 2D solar system. It uses circular orbits and different angular speeds for each planet.
 
-Add more details about usage and features here.
+---
+
+## 📚 Concepts Covered
+- Orbital speed vs distance
+- Scale modeling of the solar system
+- Visualization of multiple-body motion
+
+---
+
+## 🧰 Libraries Used
+- `matplotlib`
+- `numpy`
+
+---
+
+## ▶️ How to Run
+
+```bash
+pip install matplotlib numpy
+python main.py
+```
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](../LICENSE) file for details.
