@@ -1,11 +1,11 @@
-# 🌍 Planetary Orbit Visualizer
+# 🌍 Orbit Visualizer
 
-This project simulates a planet orbiting a star using Python. It visualizes circular (or elliptical) orbits based on basic physics, giving an animated view of orbital motion.
+This project simulates satellites orbitting Earth in different orbits (LEO, MEO, GEO) using Python. It visualizes circular (or elliptical) orbits based on basic physics, giving an animated view of orbital motion.
 
 ---
 
 ## 🚀 Concepts Covered
-- Orbital motion in 2D
+- Orbital motion in 3D
 - Angular velocity and orbital radius
 - Kepler’s Laws (basic intro)
 
