@@ -1,6 +1,6 @@
 # 🌌 Solar System Simulation
 
-This simulation models all major planets orbiting a central star in a scaled-down 2D solar system. It uses circular orbits and different angular speeds for each planet.
+This simulation models all eight planets orbiting the Sun in a scaled-down 3D solar system. It uses circular orbits and different angular speeds to match the orbits of each planet in real-time. Using arrow keys on the keyboard, you can increase or decrease the time (which adjusts the speeds of the planets).
 
 ---
 
