@@ -1,6 +1,6 @@
 # 🚀 Rocket Trajectory Simulator
 
-This project simulates the motion of a rocket using basic physics. It visualizes vertical or parabolic launch paths, incorporating gravity and initial velocity.
+This project simulates a vertically launched rocket's motion considering gravitational force, air drag, and thrust. The program calculates and plots real-time altitude, velocity, and time until the rocket returns to the ground. It displays key performance stats like maximum altitude and total flight duration.
 
 ---
 
