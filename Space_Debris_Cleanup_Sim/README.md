@@ -1,4 +1,4 @@
-# 🤖 Space Debris Cleanup Simulation
+# 🛰️ Space Debris Cleanup Simulation
 
 This project simulates an autonomous satellite that detects and removes space debris. It models detection range, classification, and pursuit behavior.
 
