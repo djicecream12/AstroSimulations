@@ -16,6 +16,15 @@ A Python project series that visualizes space and aerospace physics — from pla
 ```bash
 pip install matplotlib numpy
 ```
+## Live Portfolio Site
+Welcome to my personal portfolio site!  
+🔗 **Live Website**: [djicecream12.github.io](https://djicecream12.github.io)
+
+This site showcases my Python-based space and physics simulations, including orbital mechanics, rocket trajectories, and AI in aerospace.  
+Feel free to explore my projects!
+
+🪐 Also check out my blog: [Space, Simplified](https://medium.com/@deshna.astronomy12)
+
 ## License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
