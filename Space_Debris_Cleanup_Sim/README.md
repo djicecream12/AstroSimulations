@@ -1,6 +1,6 @@
 # 🛰️ Space Debris Cleanup Simulation
 
-This project simulates an autonomous satellite that detects and removes space debris. It models detection range, classification, and pursuit behavior.
+This project simulates three autonomous satellites for each orbit (LEO, MEO, GEO) that tracks and removes space debris. The satellite will trail the debris and clear it, modelling detection range, classification, and pursuit behavior.
 
 ---
 
