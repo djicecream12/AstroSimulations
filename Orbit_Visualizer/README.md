@@ -4,7 +4,7 @@ This project simulates satellites orbitting Earth in different orbits (LEO, MEO,
 
 ---
 
-## 🚀 Concepts Covered
+## 📚 Concepts Covered
 - Orbital motion in 3D
 - Angular velocity and orbital radius
 - Kepler’s Laws (basic intro)
