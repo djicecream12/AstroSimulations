@@ -10,7 +10,7 @@ A Python project series that visualizes space and aerospace physics — from pla
 | 2 | [Rocket Trajectory Simulator](./Rocket_Trajectory_Sim) | Simulates a vertically launched rocket's motion |
 | 3 | [Solar System Simulation](./Solar_System_Sim) | Visualizes motion of planets in a scaled-down 3D solar system |
 | 4 | [Space Debris Cleanup Simulation](./Space_Debris_Cleanup_Sim) | Simulates an autonomous satellite cleaning up space debris |
-| 5 | [Earth-Mars Hohmann Transfer Simulation](./Space_Debris_Cleanup_Sim) | Simulates the interplanetary transfer from Earth to Mars using a Hohmann transfer orbit |
+| 5 | [Earth-Mars Hohmann Transfer Simulation](./Earth-Mars_Hohmann_Transfer_Sim) | Simulates the interplanetary transfer from Earth to Mars using a Hohmann transfer orbit |
 
 ## Requirements
 
