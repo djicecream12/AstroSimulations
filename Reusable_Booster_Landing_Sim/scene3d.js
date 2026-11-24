@@ -656,6 +656,7 @@
       const stack = VEHICLE.length + (sim.attached ? VEHICLE.upperLength : 0);
       halfStack = lerp(halfStack, stack / 2, f);
       // centre of the vehicle (scaled by the visual enlargement)
+      if (!Number.isFinite(k)) k = 1;
       const hs = halfStack * k;
       target.set(sim.x + Math.sin(sim.att) * hs, sim.y + Math.cos(sim.att) * hs, 0);
 
@@ -683,7 +684,8 @@
       // enlarge the booster when it would be too small to see
       const d = Math.max(camera.position.distanceTo(target), 1);
       const px = (VEHICLE.length * H) / (2 * d * Math.tan((camera.fov * Math.PI) / 360));
-      k = Math.max(1, MIN_ROCKET_PX / px);
+      // guard against a zero-size window (hidden tab) poisoning the camera with NaN/Infinity
+      k = Number.isFinite(px) && px > 0 ? clamp(MIN_ROCKET_PX / px, 1, 20000) : 1;
     }
 
     // ---------------------------------------------------------------------
@@ -897,7 +899,8 @@
       get mode() { return ctl.mode; },
       exaggeration: () => k,
       resize(w, h, dpr) {
-        W = w; H = h; DPR = dpr;
+        W = Math.max(w, 1); H = Math.max(h, 1); DPR = dpr;
+        w = W; h = H;
         renderer.setPixelRatio(dpr);
         renderer.setSize(w, h, false);
         camera.aspect = w / h;
