@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reusable Booster Landing Simulator</title>
+  <meta name="description" content="Interactive physics simulation of how a Falcon 9-class rocket booster flies back and lands itself: boostback, entry burn, grid fins and the hoverslam landing burn.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="view" aria-label="3D view of the booster flight. Drag to orbit, scroll to zoom."></canvas>
+  <div id="labels" aria-hidden="true"></div>
+  <div class="cam-hint" id="camHint">Drag to orbit · scroll to zoom · double-click to reset view</div>
+  <div class="scale-note">rocket drawn enlarged so it stays visible · not to scale</div>
+  <div class="no3d" id="no3d" hidden>The 3D view needs <b>three.js</b>, which loads from the internet. Check your connection and reload. The telemetry, map and charts still work.</div>
+
+  <!-- Telemetry -->
+  <section class="panel hud" aria-label="Telemetry">
+    <div class="hud-head">
+      <div>
+        <div class="eyebrow">MISSION CLOCK</div>
+        <div id="clock" class="clock">T-00:10</div>
+        <div id="warpNow" class="warp-now">1× real time</div>
+      </div>
+      <div id="phaseBadge" class="phase-badge">T-MINUS</div>
+    </div>
+    <div class="grid">
+      <div class="cell"><span>ALTITUDE</span><strong id="tAlt">0 m</strong></div>
+      <div class="cell"><span>SPEED</span><strong id="tSpd">0 m/s</strong></div>
+      <div class="cell"><span>VERTICAL</span><strong id="tVy">0 m/s</strong></div>
+      <div class="cell"><span>HORIZONTAL</span><strong id="tVx">0 m/s</strong></div>
+      <div class="cell"><span>MACH</span><strong id="tMach">0.00</strong></div>
+      <div class="cell"><span>DYN. PRESSURE</span><strong id="tQ">0 kPa</strong></div>
+      <div class="cell"><span>ENGINES</span><strong id="tEng">0 / 9</strong></div>
+      <div class="cell"><span>THROTTLE</span><strong id="tThr">0 %</strong></div>
+      <div class="cell"><span>ACCEL</span><strong id="tG">1.0 g</strong></div>
+      <div class="cell"><span>TO LANDING ZONE</span><strong id="tLz">9.0 km</strong></div>
+    </div>
+    <div class="bar-row">
+      <span>PROPELLANT</span><strong id="tProp">395.7 t</strong>
+    </div>
+    <div class="bar"><i id="propBar"></i><b id="reserveMark" title="Reserve kept for landing"></b></div>
+    <div class="mini-legend"><span class="sw sw-res"></span> landing reserve</div>
+  </section>
+
+  <!-- Map + timeline -->
+  <section class="panel side" aria-label="Mission overview">
+    <div class="eyebrow">TRAJECTORY · altitude vs downrange</div>
+    <canvas id="map" width="340" height="200"></canvas>
+    <div class="eyebrow" style="margin-top:10px">FLIGHT DATA</div>
+    <canvas id="chart" width="340" height="110"></canvas>
+    <div class="chart-legend"><span class="sw" style="background:#7cc4ff"></span>altitude <span class="sw" style="background:#ffb454"></span>speed <span class="sw" style="background:#ff6b6b"></span>throttle</div>
+    <div class="eyebrow" style="margin-top:10px">SEQUENCE</div>
+    <ol id="timeline" class="timeline"></ol>
+  </section>
+
+  <!-- Explanation -->
+  <section class="panel explain" aria-live="polite">
+    <div class="eyebrow" id="explainStep">STEP 1 OF 10</div>
+    <h2 id="explainTitle">Countdown</h2>
+    <p id="explainText"></p>
+    <div id="explainFact" class="fact"></div>
+  </section>
+
+  <!-- Event log -->
+  <section class="panel log" aria-label="Event log">
+    <div class="eyebrow">FLIGHT COMPUTER LOG</div>
+    <ul id="log"></ul>
+  </section>
+
+  <!-- Controls -->
+  <nav class="panel controls" aria-label="Simulation controls">
+    <button id="playBtn" class="btn primary" title="Space">❚❚ Pause</button>
+    <button id="restartBtn" class="btn" title="R">↺ Restart</button>
+    <div class="seg" id="warpSeg" role="group" aria-label="Time warp">
+      <button data-warp="auto" class="on" title="Speeds up quiet coasting, slows down for key events">Auto</button>
+      <button data-warp="1">1×</button>
+      <button data-warp="3">3×</button>
+      <button data-warp="10">10×</button>
+      <button data-warp="30">30×</button>
+    </div>
+    <div class="seg" id="camSeg" role="group" aria-label="Camera">
+      <button data-cam="close" class="on">Close</button>
+      <button data-cam="wide">Wide</button>
+      <button data-cam="ground" title="Tracking camera on the ground near the pad / landing zone">Ground</button>
+    </div>
+    <label class="chk"><input type="checkbox" id="vecChk" checked> Force vectors</label>
+    <label class="slider">Wind <input type="range" id="wind" min="-30" max="30" step="5" value="0"><output id="windOut">0 m/s</output></label>
+    <label class="slider">Landing reserve <input type="range" id="reserve" min="30" max="70" step="2" value="52"><output id="reserveOut">52 t</output></label>
+  </nav>
+
+  <!-- Result -->
+  <div id="result" class="result hidden" role="dialog" aria-modal="false">
+    <div class="panel result-card">
+      <div id="resultIcon" class="result-icon">✓</div>
+      <h2 id="resultTitle">The Falcon has landed</h2>
+      <p id="resultText"></p>
+      <div id="resultStats" class="stats"></div>
+      <div class="result-actions">
+        <button class="btn primary" id="againBtn">Fly again</button>
+        <button class="btn" id="closeResult">Look around</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="credit">Educational simulation · 2D flight physics in a 3D scene · not affiliated with SpaceX</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+  <script>window.THREE || document.write('<script src="vendor/three.min.js"><\/script>');</script>
+  <script src="physics.js"></script>
+  <script src="scene3d.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
